@@ -1,0 +1,21 @@
+.input {
+  padding: 0.5rem 1rem 0.5rem 1rem;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  &:focus-visible {
+    outline: none;
+  }
+}
+
+.border-input {
+  border: 1px solid #DEE2E6;
+  border-radius: 1rem;
+}
+
+#upload-photo {
+  display: none;
+}
+
+.w-79-p {
+  width: 79%;
+}

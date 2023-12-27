@@ -1,0 +1,80 @@
+<div class="pt-4">
+  <div class="flex items-center">
+    <h4 class="text-base font-bold">Danh sách đơn hàng</h4>
+  </div>
+</div>
+<nz-table
+  class="mt-2"
+  #basicTable
+  [nzData]="data"
+  (nzQueryParams)="onQueryParamsChange($event)"
+  [nzScroll]="{ x: '1200px' }"
+>
+  <thead>
+    <tr>
+      <ng-container *ngFor="let header of headers">
+        <th
+          [nzShowSort]="header.canSort"
+          [nzColumnKey]="header.key"
+          [nzSortFn]="header.canSort || null"
+          [nzCustomFilter]="header.canFilter"
+        >
+          {{ header.label }}
+          <nz-filter-trigger *ngIf="header.canFilter"
+            [nzDropdownMenu]="menu"
+          >
+            <i nz-icon nzType="filter" nzTheme="fill"></i>
+          </nz-filter-trigger>
+          <nz-dropdown-menu #menu="nzDropdownMenu">
+            <div class="ant-table-filter-dropdown">
+              <div class="p-2">
+                <input
+                  *ngIf="header.dataType === 'text'"
+                  class="w-44 block mb-2"
+                  type="text"
+                  nz-input
+                  [placeholder]="header.placeholder"
+                />
+                <nz-date-picker
+                  *ngIf="header.dataType === 'date'"
+                  class="w-44 block mb-2"
+                ></nz-date-picker>
+                <nz-select
+                  *ngIf="header.dataType === 'select'"
+                  class="w-44 block mb-2"
+                  [nzPlaceHolder]="header.placeholder!"
+                >
+                  <nz-option
+                    *ngFor="let item of header.dataFilters | async"
+                    [nzValue]="item.value"
+                    [nzLabel]="item.label"
+                  ></nz-option>
+                </nz-select>
+                <button
+                  class="w-20 flex justify-center ml-auto"
+                  nz-button
+                  nzSize="small"
+                  nzType="primary"
+                >
+                  Search
+                </button>
+              </div>
+            </div>
+          </nz-dropdown-menu>
+        </th>
+      </ng-container>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of basicTable.data">
+      <td>209845433</td>
+      <td>15/05/2021</td>
+      <td>Iphone 11 Promax</td>
+      <td>20.000.000 ₫</td>
+      <td>Quận 4</td>
+      <td>Thành phố Hồ Chí Minh</td>
+      <td>Chờ thanh toán</td>
+      <td>Đang xử lý</td>
+    </tr>
+  </tbody>
+</nz-table>

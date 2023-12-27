@@ -1,0 +1,36 @@
+<nz-modal [(nzVisible)]="isVisible" [nzClosable]="false" [nzFooter]="null">
+  <ng-container *nzModalContent>
+    <div class="flex items-center">
+      <h4 class="font-semibold text-base mt-auto mb-auto">
+        THÔNG TIN NGƯỜI GỬI
+      </h4>
+      <div
+        class="
+          ml-auto
+          font-bold
+          text-gray-400 text-2xl
+          cursor-pointer
+          hover:text-gray-500
+        "
+        (click)="isVisible = false"
+      >
+        ×
+      </div>
+    </div>
+    <div class="flex w-full flex-wrap mt-4 space-y-4">
+      <input
+        class="w-full border-input input"
+        type="text"
+        formControlName="fullName"
+        placeholder="Họ tên (bắt buộc)"
+      />
+      <input
+        class="w-full border-input input"
+        type="email"
+        formControlName="fullName"
+        placeholder="Email(để nhận phản hồi qua email)"
+      />
+      <button class="p-1 w-full bg-red-600 text-white font-semibold rounded-xl">GỬI BÌNH LUẬN</button>
+    </div>
+  </ng-container>
+</nz-modal>

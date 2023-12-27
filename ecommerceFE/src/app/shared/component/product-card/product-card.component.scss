@@ -1,0 +1,66 @@
+.cellphones-color-price {
+  color: var(--cellphones-color);
+  font-size: 15px;
+}
+
+:host ::ng-deep .anticon.anticon-star {
+  font-size: 14px !important;
+}
+
+.card {
+  height: 371px;
+  box-shadow: rgb(60 64 67 / 10%) 0px 1px 2px 0px, rgb(60 64 67 / 15%) 0px 2px 6px 2px;
+  transition: height 0.2s ease-in-out;
+  position: relative;
+  .card-footer {
+    transition: display 0.2s linear;
+    display: none;
+    position: absolute;
+    width: 100%;
+    bottom: 8px;
+    right: 0px;
+    padding: 0 8px
+  }
+  &:hover {
+    height: 387px;
+    .card-footer {
+      display: grid;
+    }
+  }
+}
+
+:host ::ng-deep .ant-card-body {
+  padding: 16px 16px !important ;
+}
+
+:host ::ng-deep .ant-card-cover img {
+  border-top-left-radius: 0.75rem;
+  border-top-right-radius: 0.75rem;
+}
+
+:host ::ng-deep .ant-card-meta-title {
+  white-space: unset;
+  text-overflow: unset;
+}
+
+.sale-tag {
+  width: 80px;
+  height: 31px;
+  background: url("/assets/img/sale-tag.svg") center center no-repeat;
+  position: absolute;
+  top: 0px;
+  left: -4px;
+  p {
+    width: 100%;
+    margin-top: 2px;
+    margin-bottom: 0;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: center;
+    color: #ffffff;
+  }
+}
+
+.tag {
+  margin-bottom: 0 !important;
+}

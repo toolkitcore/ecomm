@@ -1,0 +1,111 @@
+<div class="my-4" *ngIf="orderInfo$ | async as orderInfo">
+  <h2 class="text-xl mb-2">
+    Chi tiết đơn hàng #{{ orderInfo.orderCode }} -
+    <span class="font-semibold">{{ orderInfo.status | orderStatus }}</span>
+  </h2>
+  <span><p class="text-red-500 cursor-pointer underline" (click)="cancelOrder(orderInfo.id)">Hủy đơn hàng</p></span>
+  <p class="flex justify-end">
+    Ngày đặt hàng: {{ orderInfo.createdAt | date: "HH:mm dd/MM/yyyy" }}
+  </p>
+  <div class="mt-4 gap-3 grid-cols-3 grid">
+    <div class="col-span-1">
+      <h5>ĐỊA CHỈ NGƯỜI NHẬN</h5>
+      <div class="mt-1 rounded-md shadow-lg px-2 py-3 h-28">
+        <h6 class="font-semibold">{{ orderInfo.customerName }}</h6>
+        <p>
+          Địa chỉ: {{ orderInfo.address }},
+          {{ orderInfo.districtCode | district }},
+          {{ orderInfo.provinceCode | province }}, Việt Nam
+        </p>
+        <p>Điện thoại: {{ orderInfo.phoneNumber }}</p>
+      </div>
+    </div>
+    <div class="col-span-1">
+      <h5>HÌNH THỨC GIAO HÀNG</h5>
+      <div class="mt-1 rounded-md shadow-lg px-2 py-3 h-28">
+        <p class="font-semibold">Giao hàng nhanh</p>
+        <p>
+          Giao trước
+          {{ orderInfo.estimatedDeliveryAt | date: "HH:mm 'ngày' dd/MM/yyyy" }}
+        </p>
+        <p>Được giao bởi TikiNOW Smart Logistics (giao từ Hồ Chí Minh)</p>
+      </div>
+    </div>
+    <div class="col-span-1">
+      <h5>HÌNH THỨC THANH TOÁN</h5>
+      <div class="mt-1 rounded-md shadow-lg px-2 py-3 h-28">
+        <ng-container
+          *ngIf="orderInfo.paymentMethod === paymentMethod.BankTransfer"
+        >
+          <p>Thẻ ATM nội địa (Hỗ trợ Internet Banking)</p>
+        </ng-container>
+        <ng-container *ngIf="orderInfo.paymentMethod === paymentMethod.Cash">
+          <p>Thanh toán bằng tiền mặt (Ship COD)</p>
+        </ng-container>
+        <p class="italic text-yellow-500">
+          {{ orderInfo.paymentStatus | paymentStatus }}
+        </p>
+      </div>
+    </div>
+  </div>
+  <table class="w-full rounded-md mt-6 shadow-lg">
+    <thead>
+      <tr>
+        <th class="w-1/2">Sản phẩm</th>
+        <th>Đánh giá sản phẩm</th>
+        <th>Số lượng</th>
+        <th class="text-right">Giá tiền</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of orderInfo.orderDetails">
+        <td class="text-center">
+          <img
+            class="ml-auto mr-auto w-12 h-12 object-contain inline"
+            [src]="item.image"
+          />
+          <span class="ml-2 text-base">{{ item.name }}</span>
+        </td>
+        <td class="text-center">
+          <button class="rounded-md text-blue-500 border-2 border-blue-500 p-1">
+            Viết nhận xét
+          </button>
+        </td>
+        <td class="text-center">{{ item.quantity }}</td>
+        <td class="text-right">{{ item.price | number: "1.0-2" }} ₫</td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr class="h-3"></tr>
+      <tr>
+        <td colspan="3">
+          <h4 class="flex justify-end">Mã khyến mãi:</h4>
+        </td>
+        <td class="text-right font-semibold">{{ orderInfo.saleCode || "" }}</td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          <h4 class="flex justify-end">Giảm giá:</h4>
+        </td>
+        <td class="text-right font-semibold">
+          {{ orderInfo.priceSale | number: "1.0-2" }} ₫
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          <h4 class="flex justify-end font-bold">Tổng tiền:</h4>
+        </td>
+        <td class="text-right font-semibold">
+          {{ orderInfo.totalPrice | number: "1.0-2" }} ₫
+        </td>
+      </tr>
+      <tr class="h-3"></tr>
+    </tfoot>
+  </table>
+  <button
+    class="mt-4 p-2 w-64 bg-red-600 text-white rounded-md"
+    (click)="goTimelinePage()"
+  >
+    Theo dõi đơn hàng
+  </button>
+</div>

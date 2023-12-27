@@ -1,0 +1,88 @@
+<nz-modal
+  [(nzVisible)]="isVisible"
+  [nzClosable]="false"
+  [nzFooter]="null"
+  (nzOnCancel)="handleCancel()"
+>
+  <ng-container *nzModalContent>
+    <div class="flex items-center">
+      <h4 class="font-semibold text-base mt-auto mb-auto">
+        Đánh giá & nhận xét sản phẩm
+      </h4>
+      <div
+        class="
+          ml-auto
+          font-bold
+          text-gray-400 text-2xl
+          cursor-pointer
+          hover:text-gray-500
+        "
+        (click)="isVisible = false"
+      >
+        ×
+      </div>
+    </div>
+    <form class="mt-4" [formGroup]="ratingForm">
+      <div class="flex w-full flex-wrap space-y-4">
+        <input
+          class="w-full border-input input"
+          type="text"
+          formControlName="name"
+          placeholder="Họ tên"
+        />
+        <input
+          class="w-full border-input input"
+          type="text"
+          formControlName="tel"
+          placeholder="Số điện thoại"
+        />
+        <div class="border-input flex w-full">
+          <input [(ngModel)]="fileName" [ngModelOptions]="{standalone: true}" class="input flex-1 rounded-l-2xl focus-visible:outline-none" placeholder="Hình ảnh thực tế">
+          <button class="bg-gray-200 p-2 rounded-r-2xl flex items-center font-bold text-gray-600" (click)="file.click()"><i nz-icon nzType="file-jpg" class="mr-1" nzTheme="outline"></i>Thêm ảnh</button>
+          <input
+          #file
+          type="file"
+          id="upload-photo"
+          (change)="handleFileInput($event)"
+          accept="image/png, image/gif, image/jpeg"
+        />
+        </div>
+        <textarea
+          class="w-full input border-input"
+          formControlName="comment"
+          rows="4"
+          placeholder="Xin mời chia sẻ một số cảm nhận về sản phẩm"
+        ></textarea>
+        <div class="border-input input w-full p-2">
+          <h4 class="font-bold text-gray-600">Bạn cảm thấy sản phẩm như thế nào?</h4>
+          <nz-rate class="flex justify-center" [nzCharacter]="characterIcon" formControlName="rate"></nz-rate>
+        </div>
+        <button class="p-1 w-full bg-red-600 text-white font-semibold rounded-xl">GỬI ĐÁNH GIÁ</button>
+      </div>
+    </form>
+  </ng-container>
+</nz-modal>
+<ng-template #characterIcon let-index>
+  <ng-container [ngSwitch]="index">
+    <div *ngSwitchCase="0" class="mr-8 text-center">
+      <i class="text-base" nz-icon nzType="star"></i>
+      <p class="text-xs text-gray-600">Rất tệ</p>
+    </div>
+    <div *ngSwitchCase="1" class="mr-8 text-center">
+      <i class="text-base" nz-icon nzType="star"></i>
+      <p class="text-xs text-gray-600">Tệ</p>
+    </div>
+    <div *ngSwitchCase="2" class="mr-8 text-center">
+      <i class="text-base" nz-icon nzType="star"></i>
+      <p class="text-xs text-gray-600">Bình thường</p>
+    </div>
+    <div *ngSwitchCase="3" class="mr-8 text-center">
+      <i class="text-base" nz-icon nzType="star"></i>
+      <p class="text-xs text-gray-600">Tốt</p>
+    </div>
+    <div *ngSwitchCase="4" class="mr-8 text-center">
+      <i class="text-base" nz-icon nzType="star"></i>
+      <p class="text-xs text-gray-600">Rất tốt</p>
+    </div>
+  </ng-container>
+</ng-template>

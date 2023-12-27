@@ -1,0 +1,19 @@
+{
+  "en": "English",
+  "vi": "Vietnamese",
+  "CHANGE LANGUAGE": "Change language",
+  "LOGIN": {
+    "WELCOME": "Welcome",
+    "USERNAME": "Username",
+    "PASSWORD": "Password",
+    "LOGIN": "Login",
+    "TITLE": "Please login"
+  },
+  "HEADER": {
+    "LOGIN": "Login",
+    "CART": "Cart",
+    "CONTACT": "Contact",
+    "ORDER": "Order lookup",
+    "SEARCH": "What are you looking for?"
+  }
+}

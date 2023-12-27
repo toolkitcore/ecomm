@@ -1,0 +1,50 @@
+<div class="my-4" *ngIf="orderInfo$ | async as orderInfo">
+  <h2 class="text-xl mb-2">
+    Theo dõi đơn hàng #{{ orderInfo.orderCode }} -
+    <span class="font-semibold">{{ orderInfo.status | orderStatus }}</span>
+  </h2>
+  <span><p class="text-red-500 cursor-pointer underline">Hủy đơn hàng</p></span>
+  <div class="flex space-x-2 mt-4">
+    <div class="flex-auto rounded-md shadow-md py-4 px-8">
+      <h2 class="text-lg font-medium text-green-500">
+        {{ orderInfo.status | orderStatus }}
+      </h2>
+      <p class="text-sm text-gray-400">
+        Được giao bởi TikiNOW Smart Logistics (giao từ
+        {{ orderInfo.provinceCode | province }})
+      </p>
+      <nz-divider class="mt-4 mb-6"></nz-divider>
+      <nz-timeline>
+        <ng-container *ngFor="let item of orderInfo.orderLogs; first as isFirst">
+          <nz-timeline-item [nzColor]="isFirst ? 'green' : 'gray'">
+            <h4 class="font-medium">{{item.status | orderStatus}}</h4>
+            <p *ngIf="item.status === orderStatus.Waiting">Chờ CellphoneS xác nhận</p>
+            <p *ngIf="item.status === orderStatus.Confirm">Đang đóng gói</p>
+            <p *ngIf="item.status === orderStatus.Transporting">Đơn hàng được xuất kho vận chuyển</p>
+            <p *ngIf="item.status === orderStatus.Complete">Giao hàng thành công</p>
+            <p *ngIf="item.status === orderStatus.Cancel">Đơn hàng đã bị hủy</p>
+            <p>{{item.timeStamp | date: 'HH:mm, EEE dd/MM/yyyy'}}</p>
+          </nz-timeline-item>
+        </ng-container>
+      </nz-timeline>
+    </div>
+    <div class="rounded-md mb-auto shadow-md py-4 px-8">
+      <h2 class="text-lg font-medium">Đơn hàng gồm</h2>
+      <div class="flex flex-col" *ngFor="let item of orderInfo.orderDetails">
+        <div class="flex items-center py-3">
+          <img [src]="item.image" class="w-20 h-20 object-contain" />
+          <div class="ml-2">
+            <p>{{ item.name }}</p>
+            <p class="text-gray-400">x{{ item.quantity }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button
+    class="mt-4 p-2 w-64 bg-red-600 text-white rounded-md"
+    (click)="goToOrderDetail()"
+  >
+    Chi tiết đơn hàng
+  </button>
+</div>

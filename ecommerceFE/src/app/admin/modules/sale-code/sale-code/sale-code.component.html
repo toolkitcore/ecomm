@@ -1,0 +1,95 @@
+<div class="pt-4">
+  <div class="flex items-center">
+    <h4 class="text-base font-bold">Danh sách mã giảm giá </h4>
+    <nz-input-group nzSize="small" class="ml-auto w-1/3 rounded-md input-group" [nzSuffix]="suffixIconSearch">
+      <input type="text" class="text-base" nz-input placeholder="Tìm kiếm" [formControl]=searchNameForm />
+    </nz-input-group>
+  </div>
+</div>
+<ng-template #suffixIconSearch>
+  <i nz-icon nzType="search"></i>
+</ng-template>
+
+<div class="flex items-center mt-2">
+  <button nz-button nzDanger class="flex items-center p-2 rounded-lg" (click)="openCreateModal()">
+    <i nz-icon nzType="plus" nzTheme="outline"></i>Thêm mã giảm giá
+  </button>
+</div>
+
+
+
+<nz-modal [(nzVisible)]="isCreateSaleCodeModalVisible" nzTitle="Tạo mã giảm giá" (nzOnCancel)="closeCreateModal()"
+  (nzOnOk)="createSaleCode()">
+  <ng-container *nzModalContent>
+    <form [formGroup]="createSaleCodeForm">
+      <div class="grid grid-cols-2">
+        <div class="col-span-1 p-2">
+          <label class="font-semibold">Mã giảm giá: *</label>
+          <input  nz-input type="text" placeholder="Nhập mã giảm giá" formControlName="code">
+        </div>
+        <div class="col-span-1 p-2">
+          <label class="font-semibold">Phầm trăm giảm giá: *</label>
+          <input  nz-input type="number" min="1" placeholder="Nhập phần trăm giảm giá" formControlName="percent">
+        </div>
+        <div class="col-span-1 p-2">
+          <label class="font-semibold">Mức giảm giá tối đa: *</label>
+          <input nz-input  type="number" min="1" placeholder="Nhập giá bạn muốn giảm tối đa" formControlName="maxPrice">
+        </div>
+        <div class="col-span-1 p-2">
+          <label class="font-semibold">Thời gian hết hạn: *</label>
+          <nz-date-picker  formControlName="validUntil" ></nz-date-picker>
+        </div>
+      </div>
+    </form>
+  </ng-container>
+</nz-modal>
+
+
+<div class="mt-2" *ngIf="saleCodePaging$ |async as saleCodePaging">
+  <nz-table #basicTable [nzPageIndex]="saleCodePaging.pageIndex" [nzTotal]="saleCodePaging.totalCount"
+    [nzPageSize]="saleCodePaging.pageSize" [nzData]="saleCodePaging.items"
+    (nzPageIndexChange)="onPageIndexChange($event)">
+    <thead>
+      <tr>
+        <th>Mã giảm giá</th>
+        <th>Phầm trăm giảm giá</th>
+        <th>Mức giảm giá tối đa</th>
+        <th>Thời gian hết hạn</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <ng-container *ngIf="!editCache[data.code].edit else editSc">
+          <td>{{data.code}}</td>
+          <td>{{data.percent}}</td>
+          <td>{{data.maxPrice}}</td>
+          <td>{{data.validUntil | date:'dd/MM/yyyy' }}</td>
+          <td nzAlign="center">
+            <i nz-icon nzType="delete" nzTheme="outline" class="mr-2 cursor-pointer text-xl text-red-500" nz-popconfirm
+              nzPopconfirmTitle="Bạn có muốn xoá người dùng này?" nzPopconfirmPlacement="bottom"
+              (nzOnConfirm)="deleteSaleCode(data.code)"></i>
+
+            <i nz-icon nzType="edit" class="text-2xl text-blue-500 cursor-pointer" nzTheme="outline"
+              (click)="editSaleCode(data.code)"></i>
+          </td>
+        </ng-container>
+
+        <ng-template #editSc>
+          <td>{{data.code}}</td>
+          <td><input nz-input type="text" [(ngModel)]="editCache[data.code].data.percent"></td>
+          <td><input nz-input type="text" [(ngModel)]="editCache[data.code].data.maxPrice"></td>
+          <td><nz-date-picker  [(ngModel)]="editCache[data.code].data.validUntil" ></nz-date-picker> </td>
+          <td nzAlign="center">
+            <i nz-icon nzType="close-square" nzTheme="outline" class="mr-2 cursor-pointer text-xl text-red-500"
+              (click)="closeEdit(data.code)"></i>
+            <i nz-icon nzType="save" nzTheme="outline" class="text-xl cursor-pointer text-blue-500"
+              (click)="saveEditItem(editCache[data.code])"></i>
+          </td>
+        </ng-template>
+
+
+      </tr>
+    </tbody>
+  </nz-table>
+</div>

@@ -1,0 +1,159 @@
+<div
+  class="flex justify-center h-16 w-full bg-red-custom items-center"
+  *ngIf="userProfile$ | async as userProfile"
+>
+  <a href=""
+    ><img class="hover:cursor-pointer h-16" src="assets/logo/large-icon.png"
+  /></a>
+  <i
+    class="text-white text-2xl flex items-center hover:cursor-pointer ml-4"
+    cl
+    nz-icon
+    nzType="menu"
+    nzTheme="outline"
+    nz-dropdown
+    [nzDropdownMenu]="menu"
+    nzPlacement="bottomRight"
+    nzTrigger="click"
+  >
+    <nz-dropdown-menu #menu="nzDropdownMenu">
+      <app-menu></app-menu>
+    </nz-dropdown-menu>
+  </i>
+  <nz-input-group
+    nzSize="small"
+    class="w-64 h-8 ml-4 rounded-md input-group"
+    [nzSuffix]="suffixIconSearch"
+  >
+    <input
+      type="text"
+      class="text-base"
+      nz-input
+      [formControl]="searchValue"
+      placeholder="{{'HEADER.SEARCH' | translate}}"
+      [nzAutocomplete]="auto"
+    />
+  </nz-input-group>
+  <div class="ml-4 border-2 border-white">
+    <img [src]="flagLanguageSelected" class="w-6" />
+  </div>
+  <i
+    nz-icon
+    nzType="down"
+    class="text-white ml-1 cursor-pointer"
+    nzTheme="outline"
+    nz-dropdown
+    [nzDropdownMenu]="languageMenu"
+    nzPlacement="bottomCenter"
+  >
+    <nz-dropdown-menu #languageMenu="nzDropdownMenu">
+      <div nz-menu class="px-2 py-1 w-36">
+        <p class="font-medium">{{ "CHANGE LANGUAGE" | translate }}</p>
+        <nz-radio-group
+          [(ngModel)]="languageSelected"
+          (ngModelChange)="onChangeLanguage($event)"
+        >
+          <label nz-radio *ngFor="let lang of languages" [nzValue]="lang">{{
+            lang | translate
+          }}</label>
+        </nz-radio-group>
+      </div>
+    </nz-dropdown-menu>
+  </i>
+  <i
+    class="
+      text-white text-2xl
+      flex
+      items-center
+      hover:cursor-pointer
+      ml-4
+      rotate-90
+    "
+    nz-icon
+    nzType="phone"
+    nzTheme="outline"
+  ></i>
+  <div class="ml-1 text-white">
+    <div>{{ "HEADER.CONTACT" | translate }}:</div>
+    <div class="font-bold text-sm">1800.2097</div>
+  </div>
+  <div class="ml-6 hover:cursor-pointer flex items-center item-header" routerLink="/order-tracking">
+    <i nz-icon nzType="carry-out" class="text-white text-2xl flex items-center" nzTheme="fill"></i>
+    <span class="ml-2 text-white">{{
+      "HEADER.ORDER" | translate
+    }}</span>
+  </div>
+  <div class="ml-6 hover:cursor-pointer flex items-center item-header" routerLink="/cart">
+    <nz-badge [nzCount]="(totalCartItemsQuantity$ | async)!" class="text-white text-2xl flex items-center">
+      <i nz-icon nzType="shopping" nzTheme="fill"></i>
+    </nz-badge>
+    <span class="ml-2 text-white">{{
+      "HEADER.CART" | translate
+    }}</span>
+  </div>
+  <div
+    class="ml-6 items-center item-header text-white flex hover:cursor-pointer"
+    *ngIf="!userProfile.isAuthenticate; else userTmp"
+    (click)="login()"
+  >
+    <i
+      class="text-2xl flex items-center"
+      nz-icon
+      nzType="user"
+      nzTheme="outline"
+    ></i
+    ><span class="ml-1">{{ "HEADER.LOGIN" | translate }}</span>
+  </div>
+  <ng-template #userTmp>
+    <div
+      class="ml-6 items-center item-header text-white flex hover:cursor-pointer"
+      nz-dropdown
+      [nzDropdownMenu]="userMenu"
+      nzTrigger="click"
+    >
+      <i
+        class="text-2xl flex items-center"
+        nz-icon
+        nzType="user"
+        nzTheme="outline"
+      ></i
+      ><span class="ml-1"
+        >{{ userProfile.firstName | uppercase }}
+        {{ userProfile.lastName | uppercase }}</span
+      >
+    </div>
+    <nz-dropdown-menu #userMenu="nzDropdownMenu">
+      <ul nz-menu nzSelectable>
+        <li nz-menu-item (click)="goAdminPage()">
+          <i nz-icon nzType="setting" nzTheme="outline" class="mr-2"></i>Quản
+          trị
+        </li>
+        <li nz-menu-item (click)="updatePassword()">
+          <i nz-icon nzType="lock" nzTheme="outline" class="mr-2"></i>Cập nhật mật khẩu
+        </li>
+        <li nz-menu-item (click)="logout()">
+          <i nz-icon nzType="logout" nzTheme="outline" class="mr-2"></i>Logout
+        </li>
+      </ul>
+    </nz-dropdown-menu>
+  </ng-template>
+</div>
+
+<ng-template #suffixIconSearch>
+  <i nz-icon nzType="search"></i>
+</ng-template>
+
+<nz-autocomplete #auto>
+  <nz-auto-option *ngFor="let item of autoCompleteData" (click)="goToDetail(item.slug!)">
+    <div class="flex">
+      <img [src]="item.image" class="w-10 h-11 object-contain mr-1">
+      <div class="flex-1 font-semibold">
+        <h4 class="text-sm">{{item.name}}</h4>
+        <p class="text-red-600 text-xs">{{item.originalPrice | number: '1.0-2'}} ₫</p>
+      </div>
+    </div>
+  </nz-auto-option>
+</nz-autocomplete>
+
+<app-login #loginPage></app-login>
+

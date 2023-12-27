@@ -1,0 +1,32 @@
+<div class="flex">
+  <h3
+    class="font-bold text-lg underline cursor-pointer"
+    [routerLink]="title.link"
+  >
+    {{ title.label }}
+  </h3>
+  <div class="ml-auto flex gap-x-2">
+    <ng-container *ngFor="let item of filters">
+      <button
+        class="
+          bg-gray-100
+          rounded-xl
+          py-2
+          px-4
+          border
+          text-xs
+          border-gray-400
+          cursor-pointer
+        "
+        [routerLink]="item.link"
+      >
+        {{ item.label }}
+      </button>
+    </ng-container>
+  </div>
+</div>
+<div class="mt-2 grid grid-cols-5 gap-2">
+  <ng-container *ngFor="let item of productList">
+    <app-product-card [product]=item [isShowFooter]="false" (onClickToCard)="goProductDetail($event)"></app-product-card>
+  </ng-container>
+</div>

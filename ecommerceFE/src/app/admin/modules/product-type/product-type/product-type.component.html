@@ -1,0 +1,66 @@
+<div class="pt-4">
+  <div class="flex items-center">
+    <h4 class="text-base font-bold">Danh sách loại sản phẩm</h4>
+    <nz-input-group nzSize="small" class="ml-auto w-1/3 rounded-md input-group" [nzSuffix]="suffixIconSearch">
+      <input type="text" class="text-base" nz-input placeholder="Tìm kiếm" [formControl]="searchNameForm" />
+    </nz-input-group>
+
+  </div>
+</div>
+<div class="flex items-center mt-2">
+  <button nz-button nzDanger class="flex items-center p-2 rounded-lg" (click)="isAdding = true">
+    <i nz-icon nzType="plus" nzTheme="outline"></i>Thêm loại sản phẩm
+  </button>
+</div>
+<div class="mt-2">
+  <nz-table #basicTable nzShowPagination="false" [nzData]="productTypes">
+    <thead>
+      <tr>
+        <th>Loại sản phẩm</th>
+        <th>Mã loại sản phẩm</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngIf="isAdding">
+        <td><input nz-input type="text" [(ngModel)]="newProductType.name"></td>
+        <td><input nz-input type="text" [(ngModel)]="newProductType.code"></td>
+        <td nzAlign="center">
+          <i nz-icon nzType="close-square" nzTheme="outline" class="mr-2 cursor-pointer text-xl text-red-500"
+            (click)="closeAddRow()"></i>
+          <i nz-icon nzType="save" nzTheme="outline" class="text-xl cursor-pointer text-blue-500"
+            (click)="saveNewItem()"></i>
+        </td>
+      </tr>
+      <tr *ngFor="let data of basicTable.data">
+        <ng-container *ngIf="!editCache[data.id].edit else editTmp">
+          <td>{{data.name}}</td>
+          <td>{{data.code}}</td>
+          <td nzAlign="center">
+            <i nz-icon nzType="delete" nzTheme="outline" class="mr-2 cursor-pointer text-xl text-red-500" nz-popconfirm
+              nzPopconfirmTitle="Bạn có muốn xoá loại sản phẩm này?" nzPopconfirmPlacement="bottom"
+              (nzOnConfirm)="deleteProductType(data.id)"></i>
+            <i nz-icon nzType="edit" nzTheme="outline" class="text-xl cursor-pointer text-blue-500"
+              (click)="onEditClick(data.id)"></i>
+          </td>
+        </ng-container>
+        <ng-template #editTmp>
+          <td><input nz-input type="text" [(ngModel)]="editCache[data.id].data.name"></td>
+        <td><input nz-input type="text" [(ngModel)]="editCache[data.id].data.code"></td>
+        <td nzAlign="center">
+          <i nz-icon nzType="close-square" nzTheme="outline" class="mr-2 cursor-pointer text-xl text-red-500"
+            (click)="closeEdit(data.id)"></i>
+          <i nz-icon nzType="save" nzTheme="outline" class="text-xl cursor-pointer text-blue-500"
+            (click)="saveEditItem(editCache[data.id])"></i>
+        </td>
+        </ng-template>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>
+
+
+
+<ng-template #suffixIconSearch>
+  <i nz-icon nzType="search"></i>
+</ng-template>

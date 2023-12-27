@@ -1,0 +1,19 @@
+{
+  "en": "Tiếng Anh",
+  "vi": "Tiếng Việt",
+  "CHANGE LANGUAGE": "Đổi ngôn ngữ",
+  "LOGIN": {
+    "WELCOME": "Xin chào",
+    "USERNAME": "Tên đăng nhập",
+    "PASSWORD": "Mật khẩu",
+    "LOGIN": "Đăng nhập",
+    "TITLE": "Đăng nhập"
+  },
+  "HEADER": {
+    "LOGIN": "Đăng nhập",
+    "CART": "Giỏ hàng",
+    "CONTACT": "Gọi mua hàng",
+    "ORDER": "Tra cứu đơn hàng",
+    "SEARCH": "Bạn cần tìm gì?"
+  }
+}

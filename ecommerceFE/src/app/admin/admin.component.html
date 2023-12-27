@@ -1,0 +1,76 @@
+<nz-layout class="app-layout">
+  <nz-sider
+    class="menu-sidebar"
+    nzTheme="light"
+    nzWidth="268px"
+    nzBreakpoint="md"
+    [nzTrigger]="null"
+  >
+    <div class="sidebar-logo">
+      <a routerLink="">
+        <img src="assets/logo/large-logo.png" class="w-80" alt="logo" />
+      </a>
+    </div>
+    <ul
+      nz-menu
+      nzTheme="light"
+      nzMode="inline"
+      *ngIf="menuSelected$ | async as menuSelected"
+    >
+      <ng-container *ngFor="let item of menuList">
+        <li
+          nz-menu-item
+          *appRole="item.requireRole"
+          [nzSelected]="item === menuSelected"
+          (click)="onSelectMenu(item)"
+        >
+          <i nz-icon [nzType]="item.icon" class="mr-2" nzTheme="outline"></i
+          >{{ item.title }}
+        </li>
+      </ng-container>
+    </ul>
+  </nz-sider>
+  <nz-layout>
+    <nz-header>
+      <div class="app-header px-5 flex justify-end items-center">
+        <app-notification-bell class="mr-6"></app-notification-bell>
+        <div
+          class="items-center flex hover:cursor-pointer"
+          nz-dropdown
+          [nzDropdownMenu]="userMenu"
+          nzTrigger="click"
+          *ngIf="userProfile$ | async as userProfile"
+        >
+          <nz-avatar [nzSize]="28" nzIcon="user" class="mr-1"></nz-avatar
+          ><span class="text-red-500"
+            >{{ userProfile.firstName | uppercase }}
+            {{ userProfile.lastName | uppercase }}</span
+          >
+        </div>
+        <nz-dropdown-menu #userMenu="nzDropdownMenu">
+          <ul nz-menu nzSelectable>
+            <li nz-menu-item routerLink="">
+              <i nz-icon nzType="home" nzTheme="outline" class="mr-2"></i
+              >Trang chủ
+            </li>
+            <li nz-menu-item (click)="updatePassword()">
+              <i nz-icon nzType="lock" nzTheme="outline" class="mr-2"></i>Cập nhật mật khẩu
+            </li>
+            <li nz-menu-item (click)="logout()">
+              <i nz-icon nzType="logout" nzTheme="outline" class="mr-2"></i
+              >Đăng xuất
+            </li>
+          </ul>
+        </nz-dropdown-menu>
+      </div>
+    </nz-header>
+    <nz-content class="mx-6 my-4">
+      <div class="inner-content">
+        <router-outlet></router-outlet>
+      </div>
+    </nz-content>
+  </nz-layout>
+</nz-layout>
+
+
+<app-update-password-form></app-update-password-form>

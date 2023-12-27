@@ -1,0 +1,12 @@
+<ul nz-menu nzSelectable nzMode="vertical">
+  <ng-container *ngFor="let item of menu">
+    <li nz-submenu [nzTitle]="subMenu" [nzIcon]="item.icon">
+      <ul>
+        <li *ngFor="let menuItem of item.suppliers" class="font-medium" nz-menu-item>{{menuItem.name}}</li>
+      </ul>
+    </li>
+    <ng-template #subMenu>
+      <span class="font-medium ml-1">{{item.name}}</span>
+    </ng-template>
+  </ng-container>
+</ul>

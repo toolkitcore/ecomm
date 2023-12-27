@@ -1,0 +1,22 @@
+<nz-modal [nzBodyStyle]="{padding: '0'}" class="modal" [(nzVisible)]="isModalVisible" nzClosable='false'
+  [nzFooter]="null">
+  <ng-container *nzModalContent>
+    <div (click)="closeModal()"
+      class="hover:cursor-pointer closed-button border-2 w-8 h-8 bg-white flex justify-center items-center"><i
+        class="text-red-500 text-base" nz-icon nzType="close" nzTheme="outline"></i></div>
+    <div class="grid grid-cols-3">
+      <div class="col-span-2 p-4">
+        <h3 class="text-2xl font-semibold">{{'LOGIN.WELCOME' | translate}},</h3>
+        <p class="text-base ">{{'LOGIN.TITLE' | translate}}</p>
+        <input class="mt-4 text-base" type="text" nz-input placeholder="{{'LOGIN.USERNAME' | translate}}" [(ngModel)]="username">
+        <input class="mt-4 text-base" type="password" nz-input placeholder="{{'LOGIN.PASSWORD' | translate}}" [(ngModel)]="password">
+        <button
+          class="mt-4 w-full text-base font-medium bg-red-300 border-red-500 border-2 text-white py-1 hover:bg-red-500"
+          (click)="login()">{{'LOGIN.LOGIN' | translate}}</button>
+      </div>
+      <div class="col-span-1 flex justify-center items-center bg-red-custom">
+        <img src="assets/logo/small-icon.png">
+      </div>
+    </div>
+  </ng-container>
+</nz-modal>

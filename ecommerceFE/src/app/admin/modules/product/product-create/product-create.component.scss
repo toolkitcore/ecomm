@@ -1,0 +1,15 @@
+nz-form-item {
+  padding: 0 16px;
+}
+
+#upload-file {
+  display: none;
+}
+
+.h-386 {
+  height: 386px;
+}
+
+:host ::ng-deep .ck-editor__editable_inline {
+  min-height: 500px;
+}

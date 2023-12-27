@@ -1,0 +1,271 @@
+<nz-spin [nzSpinning]="isSpinning">
+  <div class="pt-4">
+    <h4 class="flex justify-center text-base font-bold mb-4">
+      Thông tin sản phẩm
+    </h4>
+    <form
+      nz-row
+      nz-form
+      [formGroup]="createProductForm"
+      (keydown.enter)="$event.preventDefault()"
+    >
+      <nz-form-item nz-col nzSpan="8">
+        <nz-form-label nzRequired nzFor="name">Tên sản phẩm</nz-form-label>
+        <nz-form-control nzErrorTip="Please input your name!">
+          <input nz-input formControlName="name" id="name" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item
+        nz-col
+        nzSpan="8"
+        *ngIf="supplierList$ | async as supplierList"
+      >
+        <nz-form-label nzRequired nzFor="supplierId"
+          >Nhà cung cấp</nz-form-label
+        >
+        <nz-form-control nzErrorTip="The input is not valid availableStatus!">
+          <nz-select class="block w-full" formControlName="supplierId">
+            <nz-option
+              *ngFor="let item of supplierList"
+              [nzValue]="item.id"
+              [nzLabel]="item.name"
+            ></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item
+        nz-col
+        nzSpan="8"
+        *ngIf="productTypeList$ | async as productTypeList"
+      >
+        <nz-form-label nzRequired nzFor="productTypeId"
+          >Loại sản phẩm</nz-form-label
+        >
+        <nz-form-control nzErrorTip="The input is not valid productTypeId!">
+          <nz-select class="block w-full" formControlName="productTypeId">
+            <nz-option
+              *ngFor="let item of productTypeList"
+              [nzValue]="item.id"
+              [nzLabel]="item.name"
+            ></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item nz-col nzSpan="8">
+        <nz-form-label nzRequired nzFor="status">Tình trạng</nz-form-label>
+        <nz-form-control nzErrorTip="The input is not valid status!">
+          <input nz-input formControlName="status" id="status" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item nz-col nzSpan="8">
+        <nz-form-label nzRequired nzFor="originalPrice">Giá gốc</nz-form-label>
+        <nz-form-control nzErrorTip="The input is not valid originalPrice!">
+          <input
+            type="number"
+            nz-input
+            formControlName="originalPrice"
+            id="originalPrice"
+          />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item nz-col nzSpan="8">
+        <nz-form-label nzRequired nzFor="availableStatus"
+          >Trạng thái</nz-form-label
+        >
+        <nz-form-control nzErrorTip="The input is not valid availableStatus!">
+          <nz-select class="block w-full" formControlName="availableStatus">
+            <nz-option
+              *ngFor="let item of availableStatus"
+              [nzValue]="item.value"
+              [nzLabel]="item.status"
+            >
+            </nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item nz-col nzSpan="8">
+        <nz-form-label nzRequired nzFor="specialOnEnter"
+          >Đặc điểm nổi bật</nz-form-label
+        >
+        <nz-form-control nzErrorTip="The input is not valid specialOnEnter!">
+          <input
+            nz-input
+            [ngModel]="specialOnEnter"
+            [ngModelOptions]="{ standalone: true }"
+            id="specialOnEnter"
+            placeholder="Enter để thêm đặc điểm nổi bật"
+            (keyup.enter)="onAddSpecialFeatures($event)"
+            class="mb-1"
+            autocomplete="off"
+          />
+          <div
+            class="mt-2 border p-2"
+            *ngIf="createProductForm.get('specialFeatures')!.value.length > 0"
+          >
+            <ng-container
+              *ngFor="
+                let item of createProductForm.get('specialFeatures')!.value;
+                let j = index
+              "
+            >
+              <span nz-typography
+                ><code class="inline-flex items-center w-fit"
+                  >{{ item }}
+                  <i
+                    nz-icon
+                    nzType="close"
+                    nzTheme="outline"
+                    class="cursor-pointer ml-1"
+                    (click)="onDeleteSpecialFeatures(j)"
+                  ></i></code
+              ></span>
+            </ng-container>
+          </div>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item nz-col nzSpan="8">
+        <nz-form-label>Cấu hình sản phẩm</nz-form-label>
+        <div class="flex justify-end space-x-2 mb-2">
+          <a
+            href="assets/excel/template_configuration.xlsx"
+            nz-button
+            nzSize="small"
+          >
+            <i nz-icon nzType="download"></i>
+            Download file mẫu
+          </a>
+          <input
+            #file
+            id="upload-file"
+            type="file"
+            accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+            (change)="onFileChange($event)"
+            multiple="false"
+          />
+          <button
+            nzSize="small"
+            nz-button
+            nzType="primary"
+            (click)="file.click()"
+          >
+            Upload cấu hình
+          </button>
+        </div>
+        <nz-table
+          class="border h-386"
+          #configurationTable
+          [nzShowPagination]="false"
+          [nzData]="configuration!.controls"
+          [nzScroll]="{ y: '329px' }"
+        >
+          <thead>
+            <tr>
+              <th colspan="2" nzAlign="center">Cấu hình sản phẩm</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of configuration?.controls">
+              <td>{{ item.value.key }}</td>
+              <td>{{ item.value.description }}</td>
+            </tr>
+          </tbody>
+        </nz-table>
+      </nz-form-item>
+      <nz-form-item nz-col nzSpan="8">
+        <nz-form-label>Loại mẫu mã</nz-form-label>
+        <div class="flex justify-end space-x-2 mb-2">
+          <button
+          nz-button
+          nzType="primary"
+          nzSize="small"
+          (click)="addCategories()"
+          class="flex items-center"
+        >
+          <i nz-icon nzType="plus" nzTheme="outline"></i> Thêm mẫu mã
+        </button>
+        </div>
+        <div class="h-96 overflow-y-scroll p-2 border border-gray-500">
+          <div
+            formArrayName="categories"
+            *ngFor="let item of categories?.controls; let i = index"
+            class="border-2 border-gray-400 p-2 rounded-lg mb-2"
+            trackBy:trackByFn
+          >
+            <div [formGroupName]="i" nz-row>
+              <div nz-col nzSpan="23">
+                <nz-avatar
+                  class="mt-2 flex ml-auto mr-auto w-32 h-32"
+                  nzIcon="user"
+                  nzShape="square"
+                  [nzSrc]="
+                    item.value.previewImgSrc
+                      ? item.value.previewImgSrc
+                      : item.value.image
+                  "
+                ></nz-avatar>
+                <div class="mt-2 flex justify-center">
+                  <input
+                    type="file"
+                    id="file"
+                    (change)="handleFileInput($event, i)"
+                  />
+                </div>
+                <div class="mt-4 ml-6 mb-6">
+                  <div class="mb-2">
+                    <label class="text-base" for="name">Tên mẫu mã:</label>
+                    <input nz-input type="text" formControlName="name" />
+                  </div>
+                  <div class="mb-2">
+                    <label class="text-base" for="code">Giá:</label>
+                    <input nz-input type="number" formControlName="price" />
+                  </div>
+                </div>
+              </div>
+              <div nz-col nzSpan="1">
+                <i
+                  nz-icon
+                  nzType="delete"
+                  class="mr-2 cursor-pointer text-xl text-red-500"
+                  (click)="deleteCategories(i)"
+                ></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nz-form-item>
+      <nz-form-item nz-col nzSpan="24">
+        <nz-form-label nzRequired nzFor="description">Mô tả</nz-form-label>
+        <nz-form-control nzErrorTip="The input is not valid description!">
+          <ckeditor
+            name="myckeditor"
+            debounce="300"
+            [editor]="configurationEditor"
+            formControlName="description"
+          >
+          </ckeditor>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+    <div class="flex justify-center">
+      <button nz-button (click)="closeEdit()">Huỷ</button>
+      <button
+        class="
+          ml-2
+          bg-red-500
+          text-white
+          p-1
+          flex
+          justify-center
+          items-center
+          hover:bg-red-600
+        "
+        (click)="submit()"
+      >
+        Lưu thông tin
+      </button>
+    </div>
+  </div>
+</nz-spin>

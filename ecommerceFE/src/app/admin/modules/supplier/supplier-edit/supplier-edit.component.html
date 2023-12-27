@@ -1,0 +1,32 @@
+<div class="pt-4">
+  <h4 class="flex justify-center text-base font-bold">Thông tin nhà cung cấp</h4>
+  <nz-avatar class="mt-2 flex ml-auto mr-auto w-32 h-32" nzIcon="user" [nzSrc]="previewImgSrc ? previewImgSrc : supplierLogo"
+    nzShape="square"></nz-avatar>
+  <div class="mt-2 flex justify-center">
+    <input type="file" id="file" (change)="handleFileInput($event)">
+  </div>
+  <div class="mt-4">
+    <div class="mb-2">
+      <label class="text-base" for="name">Tên công ty:</label>
+      <input nz-input type="text" id="name" [(ngModel)]="supplierName">
+    </div>
+    <div class="mb-2">
+      <label class="text-base" for="code">Mã công ty:</label>
+      <input nz-input type="text" id="code" [(ngModel)]="supplierCode">
+    </div>
+    <div class="mb-2">
+      <label class="text-base">Sản phẩm kinh doanh:</label>
+      <nz-checkbox-wrapper class="block" (nzOnChange)="onCheckBoxChange($event)">
+        <div class="grid grid-cols-3">
+          <div *ngFor="let item of productTypes">
+            <label [ngModel]="item.isSelected"  nz-checkbox [nzValue]="item.id">{{item.name}}</label>
+          </div>
+        </div>
+      </nz-checkbox-wrapper>
+    </div>
+  </div>
+  <div class="flex justify-center">
+    <button nz-button (click)="closeEdit()">Huỷ</button>
+    <button class="ml-2 bg-red-500 text-white p-1 flex justify-center items-center hover:bg-red-600" (click)="submit()">Lưu thông tin</button>
+  </div>
+</div>

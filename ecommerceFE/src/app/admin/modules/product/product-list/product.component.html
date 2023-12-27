@@ -1,0 +1,40 @@
+<div class="pt-4">
+  <div class="flex items-center">
+    <h4 class="text-base font-bold">Danh sách sản phẩm</h4>
+  </div>
+</div>
+<div class="flex items-center mt-2">
+  <button nz-button nzDanger class="flex items-center p-2 rounded-lg" routerLink="create">
+    <i nz-icon nzType="plus" nzTheme="outline"></i>Thêm sản phẩm
+  </button>
+</div>
+
+<!-- Search -->
+<div class="flex items-center mt-2">
+  <nz-input-group nzSize="small" class="mr-auto w-1/3 rounded-md input-group" [nzSuffix]="suffixIconSearch">
+    <input type="text" class="text-base" nz-input placeholder="Tìm kiếm" [formControl]=searchNameForm/>
+  </nz-input-group>
+  <nz-select nzAllowClear [formControl]="productType" class="mx-4" nzPlaceHolder="Loại sản phẩm">
+    <nz-option *ngFor="let item of productTypeList$ | async" [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
+  </nz-select>
+  <nz-select nzAllowClear [formControl]="supplier" nzPlaceHolder="Hãng sản xuất">
+    <nz-option *ngFor="let item of supplierList$ | async" [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
+  </nz-select>
+</div>
+<ng-template #suffixIconSearch>
+  <i nz-icon nzType="search"></i>
+</ng-template>
+<!-- End Search -->
+<ng-container *ngIf="productPaging$ | async as productPaging">
+  <div class="grid grid-cols-6 gap-4">
+    <div *ngFor="let item of productPaging.items" class="py-2 col-span-1">
+      <app-product-card [isShowFooter]="true" [product]="item" (onClickLeftButton)="editProduct(item)" (onClickRightButton)="deleteProduct(item)" [leftButtonTitle] = "leftButtonTitle" [rightButtonTitle] = "rightButtonTitle"
+       class="w-fit" (onClickToCard)="openProductDetail($event)"></app-product-card>
+    </div>
+  </div>
+
+  <nz-pagination class="mt-8 flex justify-center" [nzPageIndex]="productPaging.pageIndex"
+    [nzTotal]="productPaging.totalCount" [nzPageSize]="productPaging.pageSize"
+    (nzPageIndexChange)="onPageIndexChange($event)">
+  </nz-pagination>
+</ng-container>

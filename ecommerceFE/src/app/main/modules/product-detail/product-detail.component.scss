@@ -1,0 +1,46 @@
+:host ::ng-deep .anticon.anticon-star {
+  font-size: 14px !important;
+}
+
+.slider {
+  border: 1px solid rgb(209, 213, 219);
+}
+
+.slider-img {
+  height: 400px;
+}
+
+.border {
+  border: 1px solid #D1D5DB;
+}
+
+.border-selected {
+  border: 1px solid #D70018;
+}
+
+.item-selected {
+  position: relative;
+  &::after {
+    content: "";
+    width: 15px;
+    height: 10px;
+    border-radius: 0 0 0.5rem 0;
+    background: #D70018;
+    background-image: url("/assets/icon/check-mark.svg");
+    background-size: 50%;
+    background-repeat: no-repeat;
+    background-position: center;
+    color: #ffffff;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}
+
+.table-cell {
+  padding: 5px 10px;
+}
+
+.description-collapsed {
+  height: 640px;
+}

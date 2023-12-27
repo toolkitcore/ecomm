@@ -1,0 +1,110 @@
+<div class="pt-4">
+  <div class="flex items-center">
+    <h4 class="text-base font-bold">Danh sách người dùng</h4>
+    <nz-input-group nzSize="small" class="ml-auto w-1/3 rounded-md input-group" [nzSuffix]="suffixIconSearch">
+      <input type="text" class="text-base" nz-input placeholder="Tìm kiếm" [formControl]="searchNameForm" />
+    </nz-input-group>
+
+  </div>
+</div>
+<div class="flex items-center mt-2">
+  <button nz-button nzDanger class="flex items-center p-2 rounded-lg" (click)="openCreateModal()">
+    <i nz-icon nzType="plus" nzTheme="outline"></i>Thêm người dùng
+  </button>
+</div>
+<div class="mt-2" *ngIf="userPaging$ |async as userPaging">
+  <nz-table #basicTable [nzPageIndex]="userPaging.pageIndex" [nzTotal]="userPaging.totalCount"
+    [nzPageSize]="userPaging.pageSize" [nzData]="userPaging.items" (nzPageIndexChange)="onPageIndexChange($event)">
+    <thead>
+      <tr>
+        <th>Tên đăng nhập</th>
+        <th>Vai trò</th>
+        <th>Họ</th>
+        <th>Tên</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <ng-container *ngIf="!editCache[data.id]?.edit else editTmp">
+          <td>{{data.username}}</td>
+          <td>{{data.role}}</td>
+          <td>{{data.lastName}}</td>
+          <td>{{data.firstName}}</td>
+          <td nzAlign="center">
+            <i nz-icon nzType="delete" nzTheme="outline" class="mr-2 cursor-pointer text-xl text-red-500" nz-popconfirm
+              nzPopconfirmTitle="Bạn có muốn xoá người dùng này?" nzPopconfirmPlacement="bottom"
+              (nzOnConfirm)="deleteUser(data.id)"></i>
+            <i nz-icon nzType="edit" nzTheme="outline" nz-dropdown [nzDropdownMenu]="editMenu" nzTrigger="click"
+              class="text-xl cursor-pointer text-blue-500"></i>
+            <nz-dropdown-menu #editMenu="nzDropdownMenu">
+              <ul nz-menu nzSelectable>
+                <li nz-menu-item (click)="onEditClick(data.id)">Chỉnh sửa</li>
+                <li nz-menu-item (click)="openEditPassword(data.id)">Cập nhật mật khẩu</li>
+              </ul>
+            </nz-dropdown-menu>
+          </td>
+        </ng-container>
+        <ng-template #editTmp>
+          <td>{{data.username}}</td>
+          <td>
+            <nz-select [(ngModel)]="editCache[data.id].data.role">
+              <nz-option *ngFor="let role of roleList" [nzValue]="role" [nzLabel]="role"></nz-option>
+            </nz-select>
+          </td>
+          <td><input nz-input type="text" [(ngModel)]="editCache[data.id].data.lastName"></td>
+          <td><input nz-input type="text" [(ngModel)]="editCache[data.id].data.firstName"></td>
+          <td nzAlign="center">
+            <i nz-icon nzType="close-square" nzTheme="outline" class="mr-2 cursor-pointer text-xl text-red-500"
+              (click)="closeEdit(data.id)"></i>
+            <i nz-icon nzType="save" nzTheme="outline" class="text-xl cursor-pointer text-blue-500"
+              (click)="saveEditItem(editCache[data.id])"></i>
+          </td>
+        </ng-template>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>
+
+
+
+<ng-template #suffixIconSearch>
+  <i nz-icon nzType="search"></i>
+</ng-template>
+
+<nz-modal [(nzVisible)]="isPasswordModalVisible" nzTitle="Cập nhật mật khẩu" (nzOnCancel)="closeEditModal()"
+  (nzOnOk)="updatePassword()">
+  <ng-container *nzModalContent>
+    <input nz-input type="password" placeholder="Nhập mật khẩu mới" [(ngModel)]="userUpdatePassword.password">
+  </ng-container>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="isCreateUserModalVisible" nzTitle="Tạo người dùng mới" (nzOnCancel)="closeCreateModal()"
+  (nzOnOk)="createUser()">
+  <ng-container *nzModalContent>
+    <div class="grid grid-cols-2">
+      <div class="col-span-1 p-2">
+        <label class="font-semibold">Tên đăng nhập: *</label>
+        <input nz-input type="text" placeholder="Nhập tên đăng nhập" [(ngModel)]="newUser.username">
+      </div>
+      <div class="col-span-1 p-2">
+        <label class="font-semibold">Mật khẩu: *</label>
+        <input nz-input type="password" placeholder="Nhập mật khẩu" [(ngModel)]="newUser.password">
+      </div>
+      <div class="col-span-1 p-2">
+        <label class="font-semibold">Họ: *</label>
+        <input nz-input type="text" placeholder="Nhập họ" [(ngModel)]="newUser.lastName">
+      </div>
+      <div class="col-span-1 p-2">
+        <label class="font-semibold">Tên: *</label>
+        <input nz-input type="text" placeholder="Nhập tên" [(ngModel)]="newUser.firstName">
+      </div>
+      <div class="col-span-2 p-2">
+        <label class="font-semibold">Vai trò: *</label>
+        <nz-select class="block w-full" [(ngModel)]="newUser.role">
+          <nz-option *ngFor="let role of roleList" [nzValue]="role" [nzLabel]="role"></nz-option>
+        </nz-select>
+      </div>
+    </div>
+  </ng-container>
+</nz-modal>
