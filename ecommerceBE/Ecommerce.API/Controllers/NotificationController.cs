@@ -14,11 +14,22 @@ namespace Ecommerce.API.Controllers
     public class NotificationController : ControllerBase
     {
         private readonly IMediator _mediator;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="mediator"></param>
         public NotificationController(IMediator mediator)
         {
             _mediator = mediator;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> GetNotification([FromQuery] GetNotificationQuery query, CancellationToken cancellationToken)
         {
@@ -26,6 +37,12 @@ namespace Ecommerce.API.Controllers
             return Ok(dto);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateSeenNotification(Guid id, CancellationToken cancellationToken)
         {
@@ -33,6 +50,12 @@ namespace Ecommerce.API.Controllers
             return Ok(dto);
         }
         
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpGet("new-notification")]
         public async Task<IActionResult> GetNumberNewNotification([FromQuery] GetNumberNewNotificationQuery query, CancellationToken cancellationToken)
         {

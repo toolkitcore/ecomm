@@ -14,11 +14,22 @@ namespace Ecommerce.API.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IMediator _mediator;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="mediator"></param>
         public AuthController(IMediator mediator)
         {
             _mediator = mediator;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [Authorize(Roles = AppRole.SuperAdmin)]
         [HttpPost("user")]
         public async Task<IActionResult> CreateUser(CreateUserCommand command, CancellationToken cancellationToken)
@@ -27,6 +38,12 @@ namespace Ecommerce.API.Controllers
             return Ok(dto);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpPost("login")]
         public async Task<IActionResult> LoginUser(LoginUserQuery query, CancellationToken cancellationToken)
         {
@@ -34,6 +51,12 @@ namespace Ecommerce.API.Controllers
             return Ok(dto);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpPost("refresh-token")]
         public async Task<IActionResult> UserRefreshToken(UserRefreshTokenQuery query, CancellationToken cancellationToken)
         {
@@ -41,6 +64,12 @@ namespace Ecommerce.API.Controllers
             return Ok(dto);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpGet("user-profile")]
         public async Task<IActionResult> GetUserProfile([FromQuery] UserProfileQuery query, CancellationToken cancellationToken)
@@ -57,6 +86,12 @@ namespace Ecommerce.API.Controllers
             return Ok(dto);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [Authorize(Roles = AppRole.SuperAdmin)]
         [HttpDelete("users/{id}")]
         public async Task<IActionResult> DeleteUser(Guid id, CancellationToken cancellationToken)
@@ -65,6 +100,13 @@ namespace Ecommerce.API.Controllers
             return Ok(dto);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="body"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [Authorize(Roles = AppRole.SuperAdmin)]
         [HttpPut("users/{id}")]
         public async Task<IActionResult> UpdateUserInfo(Guid id, [FromBody] UserUpdateDto body, CancellationToken cancellationToken)
@@ -73,6 +115,13 @@ namespace Ecommerce.API.Controllers
             return Ok(dto);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="body"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [Authorize(Roles = AppRole.SuperAdmin)]
         [HttpPut("users/{id}/password")]
         public async Task<IActionResult> UpdatePasswordUser(Guid id, [FromBody] UserPasswordDto body, CancellationToken cancellationToken)
@@ -80,6 +129,13 @@ namespace Ecommerce.API.Controllers
             var dto = await _mediator.Send(new AdminUpdatePasswordUserCommand(id, body), cancellationToken);
             return Ok(dto);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpPut("users/password")]
         public async Task<IActionResult> UpdatePassword(UpdatePasswordCommand command, CancellationToken cancellationToken)

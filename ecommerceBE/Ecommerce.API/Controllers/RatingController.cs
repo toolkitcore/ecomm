@@ -11,11 +11,22 @@ namespace Ecommerce.API.Controllers
     public class RatingController : ControllerBase
     {
         private readonly IMediator _mediator;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="mediator"></param>
         public RatingController(IMediator mediator)
         {
             _mediator = mediator;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpPost()]
         public async Task<IActionResult> CreateProductRating(CreateRatingCommand command, CancellationToken cancellationToken)
         {
@@ -23,6 +34,13 @@ namespace Ecommerce.API.Controllers
             return Ok(dto);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="slug"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpGet("products/{slug}")]
         public async Task<IActionResult> GetRatings([FromQuery] GetRatingDto query, string slug, CancellationToken cancellationToken)
         {
