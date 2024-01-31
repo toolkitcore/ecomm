@@ -14,12 +14,24 @@ namespace Ecommerce.Application.Notifications
     {
         private readonly MainDbContext _mainDbContext;
         private readonly ICurrentUser _currentUser;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="mainDbContext"></param>
+        /// <param name="currentUser"></param>
         public UpdateSeenNotificationHandler(MainDbContext mainDbContext, ICurrentUser currentUser)
         {
             _mainDbContext = mainDbContext;
             _currentUser = currentUser;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async Task<Unit> Handle(UpdateSeenNotificationCommand request, CancellationToken cancellationToken)
         {
             var userRole = _currentUser.Role;
@@ -37,6 +49,12 @@ namespace Ecommerce.Application.Notifications
             return Unit.Value;
         }
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="notificationId"></param>
+    /// <returns></returns>
     public record UpdateSeenNotificationCommand(Guid notificationId) : IRequest<Unit>;
 
 }

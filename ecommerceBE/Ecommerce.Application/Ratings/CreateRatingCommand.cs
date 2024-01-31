@@ -21,11 +21,22 @@ namespace Ecommerce.Application.Ratings
     internal class CreateRatingHandler : IRequestHandler<CreateRatingCommand, Unit>
     {
         private readonly MainDbContext _mainDbContext;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="mainDbContext"></param>
         public CreateRatingHandler(MainDbContext mainDbContext)
         {
             _mainDbContext = mainDbContext;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async Task<Unit> Handle(CreateRatingCommand request, CancellationToken cancellationToken)
         {
             var isExist = await CheckProductExist(request.ProductId, cancellationToken);
@@ -47,6 +58,12 @@ namespace Ecommerce.Application.Ratings
             return Unit.Value;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         private async Task<bool> CheckProductExist(Guid productId, CancellationToken cancellationToken)
         {
             var product = await _mainDbContext.Products

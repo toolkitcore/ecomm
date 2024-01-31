@@ -20,11 +20,22 @@ namespace Ecommerce.Application.SaleCodes
     internal class CreateSaleCodeHandler : IRequestHandler<CreateSaleCodeCommand, Unit>
     {
         private readonly MainDbContext _mainDbContext;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="mainDbContext"></param>
         public CreateSaleCodeHandler(MainDbContext mainDbContext)
         {
             _mainDbContext = mainDbContext;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async Task<Unit> Handle(CreateSaleCodeCommand request, CancellationToken cancellationToken)
         {
             var isValidateSaleCode = await ValidateUser(request.Code, cancellationToken);
@@ -38,6 +49,12 @@ namespace Ecommerce.Application.SaleCodes
             return Unit.Value;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="code"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         private async Task<bool> ValidateUser(string code, CancellationToken cancellationToken)
         {
             var saleCode = await _mainDbContext.SaleCodes.AsNoTracking().FirstOrDefaultAsync(v => v.Code == code, cancellationToken);

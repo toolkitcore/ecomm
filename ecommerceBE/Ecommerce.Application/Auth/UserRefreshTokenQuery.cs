@@ -13,12 +13,24 @@ namespace Ecommerce.Application.Auth
     {
         private readonly MainDbContext _mainDbContext;
         private readonly AuthService _authService;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="mainDbContext"></param>
+        /// <param name="authService"></param>
         public UserRefreshTokenHandler(MainDbContext mainDbContext, AuthService authService)
         {
             _mainDbContext = mainDbContext;
             _authService = authService;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async Task<RefreshTokenDto> Handle(UserRefreshTokenQuery request, CancellationToken cancellationToken)
         {
             var userId = await _authService.ValidateRefreshToken(request.RefreshToken);

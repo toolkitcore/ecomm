@@ -11,11 +11,22 @@ namespace Ecommerce.Application.Auth
     internal class CreateUserHandler : IRequestHandler<CreateUserCommand, Unit>
     {
         private readonly MainDbContext _mainDbContext;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="mainDbContext"></param>
         public CreateUserHandler(MainDbContext mainDbContext)
         {
             _mainDbContext = mainDbContext;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async Task<Unit> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
             var isValidateUser = await ValidateUser(request.Username, cancellationToken);
@@ -31,6 +42,12 @@ namespace Ecommerce.Application.Auth
             return Unit.Value;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         private async Task<bool> ValidateUser(string username, CancellationToken cancellationToken)
         {
             var user = await _mainDbContext.Users.FirstOrDefaultAsync(v => v.Username == username, cancellationToken);
@@ -41,6 +58,10 @@ namespace Ecommerce.Application.Auth
             return false;
         }
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
     public class CreateUserCommand : IRequest<Unit>
     {
         public string Username { get; init; }

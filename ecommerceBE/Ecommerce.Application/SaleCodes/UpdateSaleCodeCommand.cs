@@ -19,11 +19,22 @@ namespace Ecommerce.Application.SaleCodes
     internal class UpdateSaleCodeHandler : IRequestHandler<UpdateSaleCodeCommand, Unit>
     {
         private readonly MainDbContext _mainDbContext;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="mainDbContext"></param>
         public UpdateSaleCodeHandler(MainDbContext mainDbContext)
         {
             _mainDbContext = mainDbContext;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async Task<Unit> Handle(UpdateSaleCodeCommand request, CancellationToken cancellationToken)
         {
             var saleCode = await _mainDbContext.SaleCodes.FirstOrDefaultAsync(v => v.Code == request.Code, cancellationToken);

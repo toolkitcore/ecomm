@@ -14,12 +14,24 @@ namespace Ecommerce.Application.Auth
     {
         private readonly MainDbContext _mainDbContext;
         private readonly AuthService _authService;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="mainDbContext"></param>
+        /// <param name="authService"></param>
         public LoginUserHandler(MainDbContext mainDbContext, AuthService authService)
         {
             _mainDbContext = mainDbContext;
             _authService = authService;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async Task<UserLoginDto> Handle(LoginUserQuery request, CancellationToken cancellationToken)
         {
 
@@ -48,6 +60,10 @@ namespace Ecommerce.Application.Auth
             };
         }
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
     public class LoginUserQuery : IRequest<UserLoginDto>
     {
         public string Username { get; init; }

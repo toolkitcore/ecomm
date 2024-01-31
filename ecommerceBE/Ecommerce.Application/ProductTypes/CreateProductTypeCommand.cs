@@ -9,11 +9,22 @@ namespace Ecommerce.Application.ProductTypes
     internal class CreateProductTypeHandler : IRequestHandler<CreateProductTypeCommand, Unit>
     {
         private readonly MainDbContext _mainDbContext;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="mainDbContext"></param>
         public CreateProductTypeHandler(MainDbContext mainDbContext)
         {
             _mainDbContext = mainDbContext;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async Task<Unit> Handle(CreateProductTypeCommand request, CancellationToken cancellationToken)
         {
             var newProductType = new ProductType() { Name = request.Name, Code = request.Code };

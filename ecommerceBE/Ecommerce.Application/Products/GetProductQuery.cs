@@ -15,11 +15,22 @@ namespace Ecommerce.Application.Products
     internal class GetProductHandler : IRequestHandler<GetProductQuery, PagingModel<ProductDto>>
     {
         private readonly MainDbContext _mainDbContext;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="mainDbContext"></param>
         public GetProductHandler(MainDbContext mainDbContext)
         {
             _mainDbContext = mainDbContext;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async Task<PagingModel<ProductDto>> Handle(GetProductQuery request, CancellationToken cancellationToken)
         {
             var query = _mainDbContext.Products.AsNoTracking()

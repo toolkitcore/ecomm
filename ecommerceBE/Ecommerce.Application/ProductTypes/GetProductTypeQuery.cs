@@ -14,11 +14,22 @@ namespace Ecommerce.Application.ProductTypes
     internal class GetProductTypeHandler : IRequestHandler<GetProductTypeQuery, IEnumerable<ProductTypeDto>>
     {
         private readonly MainDbContext _mainDbContext;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="mainDbContext"></param>
         public GetProductTypeHandler(MainDbContext mainDbContext)
         {
             _mainDbContext = mainDbContext;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async Task<IEnumerable<ProductTypeDto>> Handle(GetProductTypeQuery request, CancellationToken cancellationToken)
         {
             var productTypeList = await _mainDbContext.ProductTypes.AsNoTracking()

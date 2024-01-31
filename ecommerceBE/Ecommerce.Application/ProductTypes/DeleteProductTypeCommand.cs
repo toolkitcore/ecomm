@@ -11,11 +11,22 @@ namespace Ecommerce.Application.ProductTypes
     internal class DeleteProductTypeHandler : IRequestHandler<DeleteProductTypeCommand, Unit>
     {
         private readonly MainDbContext _mainDbContext;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="mainDbContext"></param>
         public DeleteProductTypeHandler(MainDbContext mainDbContext)
         {
             _mainDbContext = mainDbContext;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async Task<Unit> Handle(DeleteProductTypeCommand request, CancellationToken cancellationToken)
         {
             var productType = await _mainDbContext.ProductTypes.FirstOrDefaultAsync(v => v.Id == request.Id, cancellationToken);

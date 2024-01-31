@@ -13,12 +13,24 @@ namespace Ecommerce.Application.Auth
     {
         private readonly MainDbContext _mainDbContext;
         private readonly ICurrentUser _currentUser;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="mainDbContext"></param>
+        /// <param name="currentUser"></param>
         public UserProfileHandler(MainDbContext mainDbContext, ICurrentUser currentUser)
         {
             _mainDbContext = mainDbContext;
             _currentUser = currentUser;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async Task<UserDto> Handle(UserProfileQuery request, CancellationToken cancellationToken)
         {
             var userId = _currentUser.Id;

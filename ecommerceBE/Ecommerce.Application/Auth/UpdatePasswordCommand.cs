@@ -18,11 +18,24 @@ namespace Ecommerce.Application.Auth
     {
         private readonly MainDbContext _mainDbContext;
         private readonly ICurrentUser _currentUser;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="mainDbContext"></param>
+        /// <param name="currentUser"></param>
         public UpdatePasswordHandler(MainDbContext mainDbContext, ICurrentUser currentUser)
         {
             _mainDbContext = mainDbContext;
             _currentUser = currentUser;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async Task<Unit> Handle(UpdatePasswordCommand request, CancellationToken cancellationToken)
         {
             if (request.NewPassword.Equals("") || request.CurrentPassword.Equals(""))

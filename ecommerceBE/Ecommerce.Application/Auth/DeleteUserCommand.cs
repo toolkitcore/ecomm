@@ -11,11 +11,22 @@ namespace Ecommerce.Application.Auth
     internal class DeleteUserHandler : IRequestHandler<DeleteUserCommand, Unit>
     {
         private readonly MainDbContext _mainDbContext;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="mainDbContext"></param>
         public DeleteUserHandler(MainDbContext mainDbContext)
         {
             _mainDbContext = mainDbContext;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async Task<Unit> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
         {
             var user = await _mainDbContext.Users.FirstOrDefaultAsync(x => x.Id == request.id, cancellationToken);
@@ -28,6 +39,12 @@ namespace Ecommerce.Application.Auth
             return Unit.Value;
         }
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     public record DeleteUserCommand(Guid id) : IRequest<Unit>
     {
     }

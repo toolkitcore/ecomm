@@ -12,11 +12,22 @@ namespace Ecommerce.Application.SaleCodes
     internal class GetSaleCodeByCodeHandler : IRequestHandler<GetSaleCodeByCodeQuery, SaleCodeDto>
     {
         private readonly MainDbContext _mainDbContext;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="mainDbContext"></param>
         public GetSaleCodeByCodeHandler(MainDbContext mainDbContext)
         {
             _mainDbContext = mainDbContext;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async Task<SaleCodeDto> Handle(GetSaleCodeByCodeQuery request, CancellationToken cancellationToken)
         {
             var saleCode = await _mainDbContext.SaleCodes.Select(x => new SaleCodeDto

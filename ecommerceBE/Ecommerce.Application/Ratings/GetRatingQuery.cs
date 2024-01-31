@@ -14,11 +14,22 @@ namespace Ecommerce.Application.Ratings
     internal class GetRatingQueryHandler : IRequestHandler<GetRatingQuery, PagingModel<RatingDto>>
     {
         private readonly MainDbContext _mainDbContext;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="mainDbContext"></param>
         public GetRatingQueryHandler(MainDbContext mainDbContext)
         {
             _mainDbContext = mainDbContext;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellatitonToken"></param>
+        /// <returns></returns>
         public async Task<PagingModel<RatingDto>> Handle(GetRatingQuery request, CancellationToken cancellatitonToken)
         {
             var query = _mainDbContext.Ratings.AsNoTracking()
@@ -46,7 +57,17 @@ namespace Ecommerce.Application.Ratings
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="slug"></param>
+    /// <param name="dto"></param>
+    /// <returns></returns>
     public record GetRatingQuery(string slug, GetRatingDto dto) : IRequest<PagingModel<RatingDto>> { }
+
+    /// <summary>
+    /// 
+    /// </summary>
     public class GetRatingDto
     {
         public int? PageSize { get; init; }

@@ -14,11 +14,22 @@ namespace Ecommerce.Application.Products
     internal class CreateProductHandler : IRequestHandler<CreateProductCommand, Unit>
     {
         private readonly MainDbContext _mainDbContext;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="mainDbContext"></param>
         public CreateProductHandler(MainDbContext mainDbContext)
         {
             _mainDbContext = mainDbContext;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async Task<Unit> Handle(CreateProductCommand request, CancellationToken cancellationToken)
         {
             var newProduct = new Product();

@@ -12,11 +12,22 @@ namespace Ecommerce.Application.Suppliers
     internal class CreateSupplierHandler : IRequestHandler<CreateSupplierCommand, Unit>
     {
         private readonly MainDbContext _mainDbContext;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="mainDbContext"></param>
         public CreateSupplierHandler(MainDbContext mainDbContext)
         {
             _mainDbContext = mainDbContext;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async Task<Unit> Handle(CreateSupplierCommand request, CancellationToken cancellationToken)
         {
             var newSupplier = new Supplier() { Name = request.Name, Logo = request.Logo, Code = request.Code };

@@ -21,6 +21,13 @@ namespace Ecommerce.Application.Orders
         private readonly MainDbContext _mainDbContext;
         private readonly IMailNotifyService _mailNotifyService;
         private readonly NotificationService _notificationService;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="mainDbContext"></param>
+        /// <param name="mailNotifyService"></param>
+        /// <param name="notificationService"></param>
         public CreateOrderHandler(MainDbContext mainDbContext, IMailNotifyService mailNotifyService, NotificationService notificationService)
         {
             _mainDbContext = mainDbContext;
@@ -28,6 +35,12 @@ namespace Ecommerce.Application.Orders
             _notificationService = notificationService;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async Task<Unit> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
         {
 
@@ -66,6 +79,13 @@ namespace Ecommerce.Application.Orders
             return Unit.Value;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="orderDetails"></param>
+        /// <param name="saleCode"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         private async Task<decimal> GetTotalPrice(ICollection<OrderDetail> orderDetails, string saleCode,
             CancellationToken cancellationToken)
         {
@@ -94,6 +114,12 @@ namespace Ecommerce.Application.Orders
             return totalPrice - code.Percent * totalPrice / 100;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="order"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         private async Task CreateNotification(Order order, CancellationToken cancellationToken)
         {
             var metadata = new

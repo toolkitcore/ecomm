@@ -11,11 +11,22 @@ namespace Ecommerce.Application.Categories
     internal class DeleteCategoryByIdHandler : IRequestHandler<DeleteCategoryByIdCommand, Unit>
     {
         private readonly MainDbContext _mainDbContext;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="mainDbContext"></param>
         public DeleteCategoryByIdHandler(MainDbContext mainDbContext)
         {
             _mainDbContext = mainDbContext;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async Task<Unit> Handle(DeleteCategoryByIdCommand request, CancellationToken cancellationToken)
         {
             var category = await _mainDbContext.Categories.FirstOrDefaultAsync(x => x.Id == request.id, cancellationToken);
@@ -28,5 +39,11 @@ namespace Ecommerce.Application.Categories
             return Unit.Value;
         }
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     public record DeleteCategoryByIdCommand(Guid id):IRequest<Unit>;
 }

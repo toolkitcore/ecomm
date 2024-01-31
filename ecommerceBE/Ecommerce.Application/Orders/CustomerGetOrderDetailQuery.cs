@@ -20,11 +20,22 @@ namespace Ecommerce.Application.Orders
     internal class CustomerGetOrderDetailHandler : IRequestHandler<CustomerGetOrderDetailQuery, OrderDto>
     {
         private readonly MainDbContext _mainDbContext;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="mainDbContext"></param>
         public CustomerGetOrderDetailHandler(MainDbContext mainDbContext)
         {
             _mainDbContext = mainDbContext;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async Task<OrderDto> Handle(CustomerGetOrderDetailQuery request, CancellationToken cancellationToken)
         {
             var order = await _mainDbContext.Orders.AsNoTracking()
@@ -79,6 +90,12 @@ namespace Ecommerce.Application.Orders
             return orderTracking;
         }
         
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="saleCode"></param>
+        /// <param name="totalPrice"></param>
+        /// <returns></returns>
         private static decimal GetSalePrice(SaleCode saleCode, decimal totalPrice)
         {
             if (saleCode.Percent * totalPrice / 100 > saleCode.MaxPrice)
@@ -89,6 +106,11 @@ namespace Ecommerce.Application.Orders
             return saleCode.Percent * totalPrice / 100;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="orderDetails"></param>
+        /// <returns></returns>
         private static decimal GetTotalPrice(ICollection<OrderDetail> orderDetails)
         {
             return orderDetails.Sum(x => x.Price * x.Quantity);

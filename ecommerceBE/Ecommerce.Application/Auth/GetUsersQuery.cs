@@ -13,11 +13,22 @@ namespace Ecommerce.Application.Auth
     internal class GetUsersHandler : IRequestHandler<GetUsersQuery, PagingModel<UserDto>>
     {
         private readonly MainDbContext _mainDbContext;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="mainDbContext"></param>
         public GetUsersHandler(MainDbContext mainDbContext)
         {
             _mainDbContext = mainDbContext;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async Task<PagingModel<UserDto>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
         {
             var query = _mainDbContext.Users.AsNoTracking().WhereIf(!string.IsNullOrEmpty(request.Username), x => EF.Functions.ILike(x.Username, $"%{request.Username}%"));
@@ -33,6 +44,10 @@ namespace Ecommerce.Application.Auth
             return new PagingModel<UserDto>(users, totalCount, request.PageIndex, request.PageSize);
         }
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
     public class GetUsersQuery : IRequest<PagingModel<UserDto>>
     {
         public int PageIndex { get; init; }

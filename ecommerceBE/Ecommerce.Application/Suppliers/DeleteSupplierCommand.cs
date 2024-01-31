@@ -11,11 +11,22 @@ namespace Ecommerce.Application.Suppliers
     internal class DeleteSupplierHandler : IRequestHandler<DeleteSupplierCommand, Unit>
     {
         private readonly MainDbContext _mainDbContext;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="mainDbContext"></param>
         public DeleteSupplierHandler(MainDbContext mainDbContext)
         {
             _mainDbContext = mainDbContext;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async Task<Unit> Handle(DeleteSupplierCommand request, CancellationToken cancellationToken)
         {
             var supplier = await _mainDbContext.Suppliers.FirstOrDefaultAsync(v => v.Id == request.Id, cancellationToken);
@@ -28,5 +39,11 @@ namespace Ecommerce.Application.Suppliers
             return Unit.Value;
         }
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="Id"></param>
+    /// <returns></returns>
     public record DeleteSupplierCommand(Guid Id) : IRequest<Unit>;
 }

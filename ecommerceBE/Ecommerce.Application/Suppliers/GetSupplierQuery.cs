@@ -14,11 +14,22 @@ namespace Ecommerce.Application.Suppliers
     internal class GetSupplierHandler : IRequestHandler<GetSupplierQuery, PagingModel<SupplierDto>>
     {
         private readonly MainDbContext _mainDbContext;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="mainDbContext"></param>
         public GetSupplierHandler(MainDbContext mainDbContext)
         {
             _mainDbContext = mainDbContext;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async Task<PagingModel<SupplierDto>> Handle(GetSupplierQuery request, CancellationToken cancellationToken)
         {
             var query = _mainDbContext.Suppliers.AsNoTracking()

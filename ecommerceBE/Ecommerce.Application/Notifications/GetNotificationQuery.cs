@@ -19,12 +19,24 @@ namespace Ecommerce.Application.Notifications
     {
         private readonly MainDbContext _mainDbContext;
         private readonly ICurrentUser _currentUser;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="mainDbContext"></param>
+        /// <param name="currentUser"></param>
         public GetNotificationHandler(MainDbContext mainDbContext, ICurrentUser currentUser)
         {
             _mainDbContext = mainDbContext;
             _currentUser = currentUser;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async Task<PagingModel<NotificationDto>> Handle(GetNotificationQuery request, CancellationToken cancellationToken)
         {
             var userRole = _currentUser.Role;

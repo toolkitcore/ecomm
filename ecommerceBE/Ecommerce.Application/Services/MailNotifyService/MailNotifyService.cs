@@ -10,11 +10,21 @@ namespace Ecommerce.Application.Services.MailNotifyService
     public class MailNotifyService : IMailNotifyService
     {
         private readonly MailSettings _mailSettings;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="mailSettings"></param>
         public MailNotifyService(IOptions<MailSettings> mailSettings)
         {
             _mailSettings = mailSettings.Value;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="mailContent"></param>
+        /// <returns></returns>
         private async Task SendMail(MailContent mailContent)
         {
             var email = new MimeMessage();
@@ -43,6 +53,14 @@ namespace Ecommerce.Application.Services.MailNotifyService
 
             smtp.Disconnect(true);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="data"></param>
+        /// <param name="eventCode"></param>
+        /// <returns></returns>
         public async Task SendMailAsync(string email, object data, string eventCode)
         {
             await SendMail(new MailContent()

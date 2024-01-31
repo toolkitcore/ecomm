@@ -14,11 +14,22 @@ namespace Ecommerce.Application.Services.Socket.Hubs
     {
         private readonly ILogger _logger;
         private readonly MainDbContext _mainDbContext;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="logger"></param>
+        /// <param name="mainDbContext"></param>
         public NotificationHub(ILogger<NotificationHub> logger, MainDbContext mainDbContext)
         {
             _logger = logger;
             _mainDbContext = mainDbContext;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public override async Task OnConnectedAsync()
         {
             var userId = new Guid(Context.UserIdentifier);

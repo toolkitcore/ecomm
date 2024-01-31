@@ -20,11 +20,23 @@ namespace Ecommerce.Application.Services.AuthService
         private const int Refresh_Token_LifeTime = 2;
         private readonly IConfiguration _configuration;
         private readonly IDistributedCache _cache;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="configuration"></param>
+        /// <param name="cache"></param>
         public AuthService(IConfiguration configuration, IDistributedCache cache)
         {
             _configuration = configuration;
             _cache = cache;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         public string GenerateToken(User user)
         {
             var credential = _configuration["AppCredential"];
@@ -46,6 +58,11 @@ namespace Ecommerce.Application.Services.AuthService
             return tokenString;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         public async Task<string> GenerateRefreshToken(Guid userId)
         {
             var randomNumber = new byte[32];
@@ -66,6 +83,11 @@ namespace Ecommerce.Application.Services.AuthService
             return refreshToken;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="refreshToken"></param>
+        /// <returns></returns>
         public async Task<Guid> ValidateRefreshToken(string refreshToken)
         {
             var redisUser = await _cache.GetAsync(refreshToken);

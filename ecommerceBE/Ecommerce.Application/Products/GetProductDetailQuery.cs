@@ -15,11 +15,22 @@ namespace Ecommerce.Application.Products
     internal class GetProductDetailHandler : IRequestHandler<GetProductDetailQuery, ProductDetailDto>
     {
         private readonly MainDbContext _mainDbContext;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="mainDbContext"></param>
         public GetProductDetailHandler(MainDbContext mainDbContext)
         {
             _mainDbContext = mainDbContext;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async Task<ProductDetailDto> Handle(GetProductDetailQuery request, CancellationToken cancellationToken)
         {
             var product = await _mainDbContext.Products.AsNoTracking()
@@ -58,5 +69,11 @@ namespace Ecommerce.Application.Products
             return product;
         }
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="slug"></param>
+    /// <returns></returns>
     public record GetProductDetailQuery(string slug) : IRequest<ProductDetailDto>;
 }

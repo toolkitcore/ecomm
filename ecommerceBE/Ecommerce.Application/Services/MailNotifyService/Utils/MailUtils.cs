@@ -8,6 +8,12 @@ namespace Ecommerce.Application.Services.MailNotifyService.Utils
 {
     public static class MailUtils
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="eventCode"></param>
+        /// <param name="properties"></param>
+        /// <returns></returns>
         public static string GetTemplateMail(string eventCode, object properties)
         {
             var doc = ReadConfigFile();
@@ -17,6 +23,11 @@ namespace Ecommerce.Application.Services.MailNotifyService.Utils
             return result;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="eventCode"></param>
+        /// <returns></returns>
         public static string GetSubjectMail(string eventCode)
         {
             var doc = ReadConfigFile();
@@ -24,6 +35,10 @@ namespace Ecommerce.Application.Services.MailNotifyService.Utils
             return selectedElement.Value;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         private static XDocument ReadConfigFile()
         {
             var assembly = Assembly.GetExecutingAssembly();
@@ -39,6 +54,12 @@ namespace Ecommerce.Application.Services.MailNotifyService.Utils
             return doc;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="mailTemplate"></param>
+        /// <param name="properties"></param>
+        /// <returns></returns>
         private static string SetEmailProperties(string mailTemplate, object properties)
         {
             var template = Template.Parse(mailTemplate);
