@@ -13,6 +13,10 @@ namespace Ecommerce.Domain.Model
     }
     internal class DistrictEntityConfiguration : IEntityTypeConfiguration<District>
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="builder"></param>
         public void Configure(EntityTypeBuilder<District> builder)
         {
             builder.ToTable($"{MainDbContext.DbTablePrefix}{nameof(District)}", MainDbContext.LocationSchema);

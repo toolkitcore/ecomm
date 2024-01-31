@@ -13,6 +13,10 @@ namespace Ecommerce.Domain.Model
 
     internal class WardEntityConfiguration : IEntityTypeConfiguration<Ward>
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="builder"></param>
         public void Configure(EntityTypeBuilder<Ward> builder)
         {
             builder.ToTable($"{MainDbContext.DbTablePrefix}{nameof(Ward)}", MainDbContext.LocationSchema);

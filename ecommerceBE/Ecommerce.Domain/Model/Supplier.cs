@@ -16,6 +16,10 @@ namespace Ecommerce.Domain.Model
 
     internal class SupplierEntityConfiguration : IEntityTypeConfiguration<Supplier>
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="builder"></param>
         public void Configure(EntityTypeBuilder<Supplier> builder)
         {
             builder.ToTable($"{MainDbContext.DbTablePrefix}{nameof(Supplier)}", MainDbContext.ProductSchema);

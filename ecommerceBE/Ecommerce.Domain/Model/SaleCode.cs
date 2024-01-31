@@ -15,6 +15,10 @@ namespace Ecommerce.Domain.Model
 
     internal class SaleCodeEntityConfiguration : IEntityTypeConfiguration<SaleCode>
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="builder"></param>
         public void Configure(EntityTypeBuilder<SaleCode> builder)
         {
             builder.ToTable($"{MainDbContext.DbTablePrefix}{nameof(SaleCode)}", MainDbContext.OrderSchema);

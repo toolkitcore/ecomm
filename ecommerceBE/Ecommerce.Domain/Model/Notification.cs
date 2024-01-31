@@ -16,6 +16,10 @@ namespace Ecommerce.Domain.Model
 
     internal class NotificationEntityConfiguration : IEntityTypeConfiguration<Notification>
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="builder"></param>
         public void Configure(EntityTypeBuilder<Notification> builder)
         {
             builder.ToTable($"{MainDbContext.DbTablePrefix}{nameof(Notification)}", MainDbContext.NotifySchema);

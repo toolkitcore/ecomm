@@ -16,6 +16,10 @@ namespace Ecommerce.Domain.Model
 
     internal class UserEntityConfiguration : IEntityTypeConfiguration<User>
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="builder"></param>
         public void Configure(EntityTypeBuilder<User> builder)
         {
             builder.ToTable($"{MainDbContext.DbTablePrefix}{nameof(User)}", MainDbContext.AuthSchema);

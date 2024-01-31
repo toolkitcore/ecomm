@@ -16,6 +16,10 @@ namespace Ecommerce.Domain.Model
 
     internal class ChildCommentEntityConfiguration : IEntityTypeConfiguration<ChildComment>
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="builder"></param>
         public void Configure(EntityTypeBuilder<ChildComment> builder)
         {
             builder.ToTable($"{MainDbContext.DbTablePrefix}{nameof(ChildComment)}", MainDbContext.ProductSchema);

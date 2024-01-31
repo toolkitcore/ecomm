@@ -10,6 +10,10 @@ namespace Ecommerce.Domain.Model
     }
     internal class CountryEntityConfiguration : IEntityTypeConfiguration<Country>
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="builder"></param>
         public void Configure(EntityTypeBuilder<Country> builder)
         {
             builder.ToTable($"{MainDbContext.DbTablePrefix}{nameof(Country)}", MainDbContext.LocationSchema);

@@ -8,6 +8,9 @@ namespace Ecommerce.Domain.Model
 {
     public class Product : BaseModel, ISoftDeleted
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public Product()
         {
             Categories = new HashSet<Category>();
@@ -32,6 +35,10 @@ namespace Ecommerce.Domain.Model
 
     internal class ProductEntityConfiguration : IEntityTypeConfiguration<Product>
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="builder"></param>
         public void Configure(EntityTypeBuilder<Product> builder)
         {
             builder.ToTable($"{MainDbContext.DbTablePrefix}{nameof(Product)}", MainDbContext.ProductSchema);

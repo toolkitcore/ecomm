@@ -33,9 +33,20 @@ namespace Ecommerce.Domain
         public DbSet<District> Districts { get; set; }
         public DbSet<Province> Provinces { get; set; }
         public DbSet<Country> Countries { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="options"></param>
+        /// <returns></returns>
         public MainDbContext(DbContextOptions<MainDbContext> options) : base(options)
         {
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="builder"></param>
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.HasPostgresExtension("pgcrypto")
@@ -43,6 +54,12 @@ namespace Ecommerce.Domain
 
             builder.ApplyConfigurationsFromAssembly(typeof(MainDbContext).Assembly);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             AddAuditInfo();
@@ -50,6 +67,9 @@ namespace Ecommerce.Domain
             return await base.SaveChangesAsync(cancellationToken);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         private void UpdateSoftDeleteStatuses()
         {
             foreach (var entry in ChangeTracker.Entries())
@@ -70,6 +90,9 @@ namespace Ecommerce.Domain
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         private void AddAuditInfo()
         {
             // Get all the entities that inherit from AuditableEntity

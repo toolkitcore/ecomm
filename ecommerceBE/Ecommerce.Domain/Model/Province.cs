@@ -11,6 +11,10 @@ namespace Ecommerce.Domain.Model
         public virtual Country Country { get; set; }
         internal class ProvinceEntityConfiguration : IEntityTypeConfiguration<Province>
         {
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <param name="builder"></param>
             public void Configure(EntityTypeBuilder<Province> builder)
             {
                 builder.ToTable($"{MainDbContext.DbTablePrefix}{nameof(Province)}", MainDbContext.LocationSchema);

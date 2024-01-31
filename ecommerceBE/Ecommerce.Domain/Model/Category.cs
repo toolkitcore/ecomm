@@ -18,6 +18,10 @@ namespace Ecommerce.Domain.Model
 
     internal class CategoryEntityConfiguration : IEntityTypeConfiguration<Category>
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="builder"></param>
         public void Configure(EntityTypeBuilder<Category> builder)
         {
             builder.ToTable($"{MainDbContext.DbTablePrefix}{nameof(Category)}", MainDbContext.ProductSchema);

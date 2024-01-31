@@ -17,6 +17,10 @@ namespace Ecommerce.Domain.Model
 
     internal class RatingEntityConfiguration : IEntityTypeConfiguration<Rating>
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="builder"></param>
         public void Configure(EntityTypeBuilder<Rating> builder)
         {
             builder.ToTable($"{MainDbContext.DbTablePrefix}{nameof(Rating)}", MainDbContext.ProductSchema);

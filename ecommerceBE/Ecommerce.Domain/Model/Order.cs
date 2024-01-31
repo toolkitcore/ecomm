@@ -7,6 +7,9 @@ namespace Ecommerce.Domain.Model
 {
     public class Order : BaseModel, ISoftDeleted
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public Order()
         {
             OrderLogs = new HashSet<OrderLog>();
@@ -35,6 +38,10 @@ namespace Ecommerce.Domain.Model
 
     internal class OrderEntityConfiguration : IEntityTypeConfiguration<Order>
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="builder"></param>
         public void Configure(EntityTypeBuilder<Order> builder)
         {
             builder.ToTable($"{MainDbContext.DbTablePrefix}{nameof(Order)}", MainDbContext.OrderSchema);

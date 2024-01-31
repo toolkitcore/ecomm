@@ -16,6 +16,10 @@ namespace Ecommerce.Domain.Model
 
     internal class OrderLogEntityConfiguration : IEntityTypeConfiguration<OrderLog>
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="builder"></param>
         public void Configure(EntityTypeBuilder<OrderLog> builder)
         {
             builder.ToTable($"{MainDbContext.DbTablePrefix}{nameof(OrderLog)}", MainDbContext.OrderSchema);

@@ -17,6 +17,10 @@ namespace Ecommerce.Domain.Model
 
     internal class OrderDetailEntityConfiguration : IEntityTypeConfiguration<OrderDetail>
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="builder"></param>
         public void Configure(EntityTypeBuilder<OrderDetail> builder)
         {
             builder.ToTable($"{MainDbContext.DbTablePrefix}{nameof(OrderDetail)}", MainDbContext.OrderSchema);
